@@ -1,32 +1,21 @@
-name: Build APK
+[app]
+title = AccessMask
+package.name = accessmask
+package.domain = org.accessmask
+source.dir = .
+source.include_exts = py
+version = 0.1
 
-on:
-  push:
-    branches: [ "main" ]
+requirements = python3,kivy
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+orientation = portrait
+fullscreen = 1
 
-    steps:
-    - uses: actions/checkout@v4
+android.permissions = CAMERA
+android.api = 33
+android.minapi = 21
+android.ndk = 25b
+android.archs = arm64-v8a
 
-    - name: Install system dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y python3 python3-pip git zip unzip openjdk-17-jdk
-
-    - name: Install Buildozer
-      run: |
-        pip3 install --user buildozer
-        pip3 install --user cython
-
-    - name: Build APK
-      run: |
-        ~/.local/bin/buildozer android debug
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: AccessMask-APK
-        path: bin/*.apk
+[buildozer]
+log_level = 2
